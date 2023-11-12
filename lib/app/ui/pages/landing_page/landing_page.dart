@@ -39,11 +39,14 @@ class LandingPage extends GetView<LandingController> {
                           children: [
                             Obx(() => Text(
                                   "Points: ${controller.totalPoints}",
-                                  style: appStandarText(color: Colors.blue, fontSize: 50),
+                                  style: appStandarText(
+                                      color: Colors.blue, fontSize: 50),
                                 )),
                             Obx(() => Column(
                                   children: [
-                                    Text("Volume", style: appStandarText(color: Colors.orange)),
+                                    Text("Volume",
+                                        style: appStandarText(
+                                            color: Colors.orange)),
                                     Slider(
                                         value: controller.volume.value,
                                         min: 0.0,
@@ -52,8 +55,9 @@ class LandingPage extends GetView<LandingController> {
                                         onChanged: (double value) {
                                           try {
                                             controller.volume.value = value;
-                                            // controller.player!
-                                            //     .setVolume(controller.volume.value);
+                                            controller.player.backgroundPlayer
+                                                ?.setVolume(
+                                                    controller.volume.value);
                                           } catch (e) {
                                             print(e);
                                           }
@@ -66,17 +70,21 @@ class LandingPage extends GetView<LandingController> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     'Lifes:',
-                                    style: appStandarText(fontSize: 50, color: Colors.red),
+                                    style: appStandarText(
+                                        fontSize: 50, color: Colors.red),
                                   ),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
-                                  children: List.generate(controller.lifeStates.length, (index) {
+                                  children: List.generate(
+                                      controller.lifeStates.length, (index) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: LifeIndicatorWidget(
-                                        emptyLifeImagePath: "${ASSET_IMAGES_APP}fail.png",
-                                        imagePath: "${ASSET_IMAGES_APP}life.png",
+                                        emptyLifeImagePath:
+                                            "${ASSET_IMAGES_APP}fail.png",
+                                        imagePath:
+                                            "${ASSET_IMAGES_APP}life.png",
                                         index: index,
                                         controller: controller,
                                       ),
@@ -93,9 +101,12 @@ class LandingPage extends GetView<LandingController> {
                       Footer(controller: controller),
                       const SizedBox(height: 14),
                       MaterialButton(
-                        onPressed: () => controller.submitpressed(controller.txt.text),
+                        onPressed: () =>
+                            controller.submitpressed(controller.txt.text),
                         child: Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.red),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(

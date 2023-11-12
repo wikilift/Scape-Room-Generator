@@ -91,13 +91,17 @@ InputDecoration inputFieldDecoration(
         fillColor: Colors.white,
         label: Text(
           label,
-          style:
-              TextStyle(color: colorLabel, fontSize: (textSize == null) ? 30 : textSize, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: colorLabel,
+              fontSize: (textSize == null) ? 30 : textSize,
+              fontWeight: FontWeight.bold),
           overflow: (overflow == null) ? null : overflow,
         ),
         alignLabelWithHint: true,
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colorBorder, width: 2)),
-        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: colorBorder, width: 2)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: colorBorder, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: colorBorder, width: 2)),
         hintText: hint,
         hintStyle: appStandarText(color: Colors.orange),
         suffixIcon: Icon(iconSuffix, size: iconSize, color: iconColor),
@@ -109,32 +113,55 @@ InputDecoration inputFieldDecoration(
               )
             : null);
 BoxDecoration GRADIENT_BK() => const BoxDecoration(
-    gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Color.fromARGB(255, 240, 240, 240), Color.fromARGB(255, 231, 231, 231)],
-        stops: [0.2, 0.8]));
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+          Color.fromARGB(255, 240, 240, 240),
+          Color.fromARGB(255, 231, 231, 231)
+        ],
+            stops: [
+          0.2,
+          0.8
+        ]));
 
-TextStyle appStandarText({double? fontSize, Color? color, bool shadow = false}) => TextStyle(
-    color: (color != null) ? color : const Color.fromRGBO(0, 0, 0, 0.8),
-    fontSize: (fontSize != null) ? fontSize : H5,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.bold,
-    height: 1.5,
-    fontFamily: 'myFont',
-    decoration: TextDecoration.none,
-    shadows: (shadow) ? const [Shadow(blurRadius: 5.0, color: Colors.black54, offset: Offset(2.0, 2.0))] : null);
+TextStyle appStandarText(
+        {double? fontSize, Color? color, bool shadow = false}) =>
+    TextStyle(
+        color: (color != null) ? color : const Color.fromRGBO(0, 0, 0, 0.8),
+        fontSize: (fontSize != null) ? fontSize : H5,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.bold,
+        height: 1.5,
+        fontFamily: 'myFont',
+        decoration: TextDecoration.none,
+        shadows: (shadow)
+            ? const [
+                Shadow(
+                    blurRadius: 5.0,
+                    color: Colors.black54,
+                    offset: Offset(2.0, 2.0))
+              ]
+            : null);
 
-Widget appStandardButton({required String msg, required Color color, double? size, double? width, double? height}) =>
+Widget appStandardButton(
+        {required String msg,
+        required Color color,
+        double? size,
+        double? width,
+        double? height}) =>
     Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), shape: BoxShape.rectangle, color: color.withOpacity(0.8)),
+            borderRadius: BorderRadius.circular(8),
+            shape: BoxShape.rectangle,
+            color: color.withOpacity(0.8)),
         width: width ??= 120,
         height: height ??= 40,
         child: Center(
           child: Text(
             msg,
-            style: appStandarText(fontSize: size ??= H3, color: Colors.white, shadow: true),
+            style: appStandarText(
+                fontSize: size ??= H3, color: Colors.white, shadow: true),
             textAlign: TextAlign.center,
           ),
         ));
@@ -150,30 +177,44 @@ Future<void> blockScreen(context) => showDialog(
       ),
     );
 launchSnackBar(String title, String message,
-    {Color? textColor, bool? warning, bool? error, int? duration, double? overlayBlur, SnackPosition? postion}) {
+    {Color? textColor,
+    bool? warning,
+    bool? error,
+    int? duration,
+    double? overlayBlur,
+    SnackPosition? postion}) {
   if (warning != null && warning) {
     Get.snackbar(
       "",
       "",
       snackPosition: postion ??= SnackPosition.TOP,
-      titleText: Text(title, style: appStandarText(fontSize: H3, color: textColor ??= Colors.black)),
-      messageText: Text(message, style: appStandarText(fontSize: H3, color: textColor)),
+      titleText: Text(title,
+          style:
+              appStandarText(fontSize: H3, color: textColor ??= Colors.black)),
+      messageText:
+          Text(message, style: appStandarText(fontSize: H3, color: textColor)),
       backgroundColor: Colors.orange.withOpacity(0.6),
       duration: Duration(seconds: duration ?? 2),
     );
   } else if (error != null && error) {
     Get.snackbar("", "",
         snackPosition: postion ??= SnackPosition.TOP,
-        titleText: Text(title, style: appStandarText(fontSize: H3, color: textColor ??= Colors.black)),
-        messageText: Text(message, style: appStandarText(fontSize: H3, color: textColor)),
+        titleText: Text(title,
+            style: appStandarText(
+                fontSize: H3, color: textColor ??= Colors.black)),
+        messageText: Text(message,
+            style: appStandarText(fontSize: H3, color: textColor)),
         backgroundColor: Colors.red.withOpacity(0.6),
         duration: Duration(seconds: duration ?? 2));
   } else {
     Get.snackbar("", "",
         snackPosition: postion ??= SnackPosition.TOP,
-        titleText: Text(title, style: appStandarText(fontSize: H3, color: textColor ??= Colors.black)),
-        messageText: Text(message, style: appStandarText(fontSize: H3, color: textColor)),
-        backgroundColor: Colors.green.withOpacity(0.6),
+        titleText: Text(title,
+            style: appStandarText(
+                fontSize: H3, color: textColor ??= Colors.black)),
+        messageText: Text(message,
+            style: appStandarText(fontSize: H3, color: textColor)),
+        // backgroundColor: Colors.green.withOpacity(0.6),
         duration: Duration(seconds: duration ?? 2));
   }
 }

@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
+import 'package:quiz_birthday/app/controllers/gameover_controller.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
-import '../../../controllers/gameover_controller.dart';
 
 class GameoverPage extends GetView<GameoverController> {
   const GameoverPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    final c = controller;
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -42,8 +44,9 @@ class GameoverPage extends GetView<GameoverController> {
                   MaterialButton(
                     onPressed: () => exit(0),
                     child: Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red.withOpacity(0.8)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.red.withOpacity(0.8)),
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Text(

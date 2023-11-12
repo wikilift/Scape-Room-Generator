@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quiz_birthday/app/bindings/splash_binding.dart';
+import 'package:quiz_birthday/app/bindings/sound_player_binding.dart';
+
 import 'package:quiz_birthday/app/routes/pages.dart';
 
 void main() async {
@@ -11,7 +12,7 @@ void main() async {
     initialRoute: Routes.INITIAL,
     theme: ThemeData.light(useMaterial3: false),
     defaultTransition: Transition.fade,
-    initialBinding: SplashBinding(),
+    initialBinding: SoundPlayerBinding(),
     getPages: AppPages.pages,
     title: 'Quiz BirthDay',
     //locale: Get.deviceLocale,

@@ -30,7 +30,9 @@ class SplashPage extends GetView<SplashController> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Loading...", style: appStandarText(color: Colors.white, fontSize: 50)),
+                      Text("Loading...",
+                          style: appStandarText(
+                              color: Colors.white, fontSize: 50)),
                       const SizedBox(
                         height: 10,
                       ),
@@ -40,6 +42,27 @@ class SplashPage extends GetView<SplashController> {
                       )
                     ],
                   ))),
+          SizedBox(
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 110.0),
+                child: Obx(() {
+                  final offsetX = controller.animationValue.value;
+                  final offsetY = controller.verticalAnimationValue.value;
+                  return Transform.translate(
+                    offset: Offset(offsetX, offsetY),
+                    child: Image(
+                      image: AssetImage("${ASSET_IMAGES_APP}palo.png"),
+                      fit: BoxFit.contain,
+                      width: 350,
+                      height: 300,
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
         ],
       ),
     ));

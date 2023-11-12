@@ -1,7 +1,9 @@
 //import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
+import 'package:quiz_birthday/app/controllers/sound_controller.dart';
 import 'package:quiz_birthday/app/data/models/challenge.dart';
 import 'package:quiz_birthday/app/helpers/encrypter.dart';
 import 'package:quiz_birthday/app/routes/pages.dart';
@@ -15,12 +17,12 @@ class LandingController extends GetxController {
   final currentIndex = 0.obs;
   late final int maxPoints;
   final txt = TextEditingController();
-  //AudioPlayer? player;
+  final player = Get.find<SoundController>();
   RxDouble volume = 1.0.obs;
   playSound(String asset) async {
-    // final p = AudioPlayer(playerId: "generic");
+    final p = AudioPlayer(playerId: "generic");
     try {
-      //   await p.play(AssetSource("$ASSET_SOUNDS$asset"));
+      await p.play(AssetSource("$ASSET_SOUNDS$asset"));
     } catch (e) {
       print(e);
     }
@@ -32,14 +34,6 @@ class LandingController extends GetxController {
     challenges.addAll(await CryptoManager.main());
     lifeStates.addAll(List.generate(totalLives.round(), (_) => false));
     maxPoints = challenges.length;
-    /*    try {
-      player = AudioPlayer(playerId: "backGround");
-
-      await player!.play(AssetSource("${ASSET_SOUNDS}soundtheme.mp3"));
-      player!.setReleaseMode(ReleaseMode.loop);
-    } catch (e) {
-      print(e);
-    } */
   }
 
   void changeLifeState(int index) {
@@ -48,7 +42,7 @@ class LandingController extends GetxController {
     }
   }
 
-  void deleteLife(double amount) {
+  void deleteLife(double amount) async {
     if (totalLives.value > 1) {
       totalLives.value -= amount;
 
@@ -57,7 +51,11 @@ class LandingController extends GetxController {
         lifeStates[i] = i >= fullLives;
       }
     } else {
+      await player.stopBackgroundSound();
       Get.offAllNamed(Routes.GAME_OVER);
+      /*   await player
+          .playSound("die.mp3")
+          .then((value) => */
     }
   }
 
@@ -71,7 +69,8 @@ class LandingController extends GetxController {
         MaterialButton(
           onPressed: () => Get.back(),
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), color: Colors.red),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
@@ -84,9 +83,10 @@ class LandingController extends GetxController {
       ],
     );
     deleteLife(0.5);
+    await player.playSound("kick.mp3");
   }
 
-  submitpressed(String input) {
+  submitpressed(String input) async {
     final currentChallengue = challenges[currentIndex.value];
     if (currentChallengue.contains) {
       bool find = false;
@@ -96,29 +96,37 @@ class LandingController extends GetxController {
           currentIndex.value++;
           totalPoints.value++;
           if (totalPoints.value == maxPoints) {
+            await player.stopBackgroundSound();
             Get.offAllNamed(Routes.WIN_PAGE);
             return;
           }
-          Get.snackbar("¡Correcto!", "Pin de regalo :)");
+          Future.microtask(
+              () => launchSnackBar("¡Correcto!", "Pin de regalo :)"));
 
           find = true;
           break;
         }
       }
       if (!find) {
+        await player.playSound("kick.mp3");
         deleteLife(1);
       }
     } else {
       if (input.toLowerCase().trim() == currentChallengue.solve.toLowerCase()) {
         currentIndex.value++;
         totalPoints.value++;
+        await player.playSound("coin.mp3");
+
         if (totalPoints.value == maxPoints) {
+          await player.stopBackgroundSound();
           Get.offAllNamed(Routes.WIN_PAGE);
           return;
         }
-        Get.snackbar("¡Correcto!", "Pin de regalo :)");
+        Future.microtask(
+            () => launchSnackBar("¡Correcto!", "Pin de regalo :)"));
       } else {
         deleteLife(1);
+        await player.playSound("kick.mp3");
       }
     }
     txt.clear();
