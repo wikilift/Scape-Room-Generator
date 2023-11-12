@@ -4,6 +4,7 @@ import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/controllers/landing_controller.dart';
 import 'package:quiz_birthday/app/ui/global_widgets/exit_button.dart';
 import 'package:quiz_birthday/app/ui/global_widgets/life_widget.dart';
+import 'package:quiz_birthday/app/ui/pages/landing_page/challenge_widget.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 
 class LandingPage extends GetView<LandingController> {
@@ -26,76 +27,71 @@ class LandingPage extends GetView<LandingController> {
                 fit: BoxFit.cover,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Obx(() => Text(
-                              "Points: ${controller.totalPoints}",
-                              style: appStandarText(
-                                  color: Colors.blue, fontSize: 50),
-                            )),
-                        Obx(() => Column(
-                              children: [
-                                Text("Volume",
-                                    style:
-                                        appStandarText(color: Colors.orange)),
-                                Slider(
-                                    value: controller.volume.value,
-                                    min: 0.0,
-                                    max: 1.0,
-                                    //divisions: 10,
-                                    onChanged: (double value) {
-                                      try {
-                                        controller.volume.value = value;
-                                        controller.player!
-                                            .setVolume(controller.volume.value);
-                                      } catch (e) {
-                                        print(e);
-                                      }
-                                    }),
-                              ],
-                            )),
-                        Row(
+            Obx(() => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Lifes:',
-                                style: appStandarText(
-                                    fontSize: 50, color: Colors.red),
-                              ),
-                            ),
+                            Obx(() => Text(
+                                  "Points: ${controller.totalPoints}",
+                                  style: appStandarText(color: Colors.blue, fontSize: 50),
+                                )),
+                            Obx(() => Column(
+                                  children: [
+                                    Text("Volume", style: appStandarText(color: Colors.orange)),
+                                    Slider(
+                                        value: controller.volume.value,
+                                        min: 0.0,
+                                        max: 1.0,
+                                        //divisions: 10,
+                                        onChanged: (double value) {
+                                          try {
+                                            controller.volume.value = value;
+                                            // controller.player!
+                                            //     .setVolume(controller.volume.value);
+                                          } catch (e) {
+                                            print(e);
+                                          }
+                                        }),
+                                  ],
+                                )),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: List.generate(
-                                  controller.lifeStates.length, (index) {
-                                return Padding(
+                              children: [
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: LifeIndicatorWidget(
-                                    emptyLifeImagePath:
-                                        "${ASSET_IMAGES_APP}fail.png",
-                                    imagePath: "${ASSET_IMAGES_APP}life.png",
-                                    index: index,
-                                    controller: controller,
+                                  child: Text(
+                                    'Lifes:',
+                                    style: appStandarText(fontSize: 50, color: Colors.red),
                                   ),
-                                );
-                              }),
-                            )
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: List.generate(controller.lifeStates.length, (index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: LifeIndicatorWidget(
+                                        emptyLifeImagePath: "${ASSET_IMAGES_APP}fail.png",
+                                        imagePath: "${ASSET_IMAGES_APP}life.png",
+                                        index: index,
+                                        controller: controller,
+                                      ),
+                                    );
+                                  }),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 60),
+                      ChallengeWidget(controller: controller)
+                    ],
                   ),
-                ],
-              ),
-            )
+                ))
           ],
         ),
       ),

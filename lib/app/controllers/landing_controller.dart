@@ -1,17 +1,24 @@
-import 'package:audioplayers/audioplayers.dart';
+//import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
+import 'package:quiz_birthday/app/data/models/challenge.dart';
+import 'package:quiz_birthday/app/helpers/encrypter.dart';
+import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 
 class LandingController extends GetxController {
   final lifeStates = [].obs;
   final totalLives = 3.0.obs;
   final totalPoints = 0.obs;
-  AudioPlayer? player;
+  final challenges = <Challenge>[].obs;
+  final currentIndex = 0.obs;
+  late final int maxPoints;
+  //AudioPlayer? player;
   RxDouble volume = 1.0.obs;
   playSound(String asset) async {
-    final p = AudioPlayer(playerId: "generic");
+    // final p = AudioPlayer(playerId: "generic");
     try {
-      await p.play(AssetSource("$ASSET_SOUNDS$asset"));
+      //   await p.play(AssetSource("$ASSET_SOUNDS$asset"));
     } catch (e) {
       print(e);
     }
@@ -20,7 +27,9 @@ class LandingController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    challenges.addAll(await CryptoManager.main());
     lifeStates.addAll(List.generate(totalLives.round(), (_) => false));
+    maxPoints = challenges.length;
     /*    try {
       player = AudioPlayer(playerId: "backGround");
 
@@ -44,6 +53,59 @@ class LandingController extends GetxController {
       int fullLives = totalLives.round();
       for (int i = 0; i < lifeStates.length; i++) {
         lifeStates[i] = i >= fullLives;
+      }
+    }
+  }
+
+  helPressed() async {
+    await Get.defaultDialog(
+      title: "Ayuda",
+      middleText: challenges[currentIndex.value].help,
+      titleStyle: appStandarText(color: Colors.red),
+      middleTextStyle: appStandarText(),
+      actions: [
+        MaterialButton(
+          onPressed: () => Get.back(),
+          child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Close',
+                style: appStandarText(),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+    deleteLife(0.5);
+  }
+
+  submitpressed(String input) {
+    final currentChallengue = challenges[currentIndex.value];
+    if (currentChallengue.contains) {
+      bool find = false;
+      final solves = currentChallengue.solve.split('*');
+      for (final i in solves) {
+        if (i.toLowerCase().trim().contains(input.trim().toLowerCase())) {
+          currentIndex.value++;
+          totalPoints.value++;
+          Get.snackbar("¡Correcto!", "Pin de regalo :)");
+          find = true;
+          break;
+        }
+      }
+      if (!find) {
+        deleteLife(1);
+      }
+    } else {
+      if (input.toLowerCase().trim() == currentChallengue.solve.toLowerCase()) {
+        currentIndex.value++;
+        totalPoints.value++;
+        Get.snackbar("¡Correcto!", "Pin de regalo :)");
+      } else {
+        deleteLife(1);
       }
     }
   }

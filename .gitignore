@@ -41,3 +41,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+assets/challenge_json/challenge.json
+assets/challenge_json/solve.in

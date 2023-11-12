@@ -97,9 +97,9 @@ InputDecoration inputFieldDecoration(
         enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colorBorder, width: 2)),
         focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: colorBorder, width: 2)),
         hintText: hint,
+        hintStyle: appStandarText(color: Colors.orange),
         suffixIcon: Icon(iconSuffix, size: iconSize, color: iconColor),
-        labelStyle:
-            TextStyle(color: colorLabel, fontSize: (textSize == null) ? 30 : textSize, fontWeight: FontWeight.bold),
+        labelStyle: appStandarText(color: Colors.blue),
         prefixIcon: icon != null
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
