@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/data/models/challenge.dart';
 import 'package:quiz_birthday/app/helpers/encrypter.dart';
+import 'package:quiz_birthday/app/routes/pages.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 
 class LandingController extends GetxController {
@@ -13,6 +14,7 @@ class LandingController extends GetxController {
   final challenges = <Challenge>[].obs;
   final currentIndex = 0.obs;
   late final int maxPoints;
+  final txt = TextEditingController();
   //AudioPlayer? player;
   RxDouble volume = 1.0.obs;
   playSound(String asset) async {
@@ -47,13 +49,15 @@ class LandingController extends GetxController {
   }
 
   void deleteLife(double amount) {
-    if (totalLives.value > 0) {
+    if (totalLives.value > 1) {
       totalLives.value -= amount;
 
       int fullLives = totalLives.round();
       for (int i = 0; i < lifeStates.length; i++) {
         lifeStates[i] = i >= fullLives;
       }
+    } else {
+      Get.offAllNamed(Routes.GAME_OVER);
     }
   }
 
@@ -91,7 +95,12 @@ class LandingController extends GetxController {
         if (i.toLowerCase().trim().contains(input.trim().toLowerCase())) {
           currentIndex.value++;
           totalPoints.value++;
+          if (totalPoints.value == maxPoints) {
+            Get.offAllNamed(Routes.WIN_PAGE);
+            return;
+          }
           Get.snackbar("¡Correcto!", "Pin de regalo :)");
+
           find = true;
           break;
         }
@@ -103,10 +112,15 @@ class LandingController extends GetxController {
       if (input.toLowerCase().trim() == currentChallengue.solve.toLowerCase()) {
         currentIndex.value++;
         totalPoints.value++;
+        if (totalPoints.value == maxPoints) {
+          Get.offAllNamed(Routes.WIN_PAGE);
+          return;
+        }
         Get.snackbar("¡Correcto!", "Pin de regalo :)");
       } else {
         deleteLife(1);
       }
     }
+    txt.clear();
   }
 }

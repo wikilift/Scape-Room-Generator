@@ -3,8 +3,7 @@
 part of './pages.dart';
 
 abstract class Routes {
-  static const INITIAL = LANDING;
-
+  static const INITIAL = SPLASH_PAGE;
   static const SPLASH_PAGE = "/splash_page";
   static const WIN_PAGE = "/win_page";
   static const GAME_OVER = "/game_over_page";

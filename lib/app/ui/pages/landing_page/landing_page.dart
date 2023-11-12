@@ -4,7 +4,8 @@ import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/controllers/landing_controller.dart';
 import 'package:quiz_birthday/app/ui/global_widgets/exit_button.dart';
 import 'package:quiz_birthday/app/ui/global_widgets/life_widget.dart';
-import 'package:quiz_birthday/app/ui/pages/landing_page/challenge_widget.dart';
+import 'package:quiz_birthday/app/ui/pages/landing_page/widgets/challenge_widget.dart';
+import 'package:quiz_birthday/app/ui/pages/landing_page/widgets/footer.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 
 class LandingPage extends GetView<LandingController> {
@@ -16,7 +17,7 @@ class LandingPage extends GetView<LandingController> {
 
     return Scaffold(
       body: Container(
-        constraints: const BoxConstraints(minHeight: 800, minWidth: 600),
+        constraints: const BoxConstraints(minHeight: 1000, minWidth: 600),
         child: Stack(
           children: [
             SizedBox(
@@ -88,7 +89,22 @@ class LandingPage extends GetView<LandingController> {
                         ),
                       ),
                       const SizedBox(height: 60),
-                      ChallengeWidget(controller: controller)
+                      ChallengeWidget(controller: controller),
+                      Footer(controller: controller),
+                      const SizedBox(height: 14),
+                      MaterialButton(
+                        onPressed: () => controller.submitpressed(controller.txt.text),
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'Submit',
+                              style: appStandarText(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ))

@@ -87,6 +87,8 @@ InputDecoration inputFieldDecoration(
         double? textSize = 20,
         required String label}) =>
     InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
         label: Text(
           label,
           style:
@@ -118,6 +120,7 @@ TextStyle appStandarText({double? fontSize, Color? color, bool shadow = false}) 
     fontSize: (fontSize != null) ? fontSize : H5,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.bold,
+    height: 1.5,
     fontFamily: 'myFont',
     decoration: TextDecoration.none,
     shadows: (shadow) ? const [Shadow(blurRadius: 5.0, color: Colors.black54, offset: Offset(2.0, 2.0))] : null);
