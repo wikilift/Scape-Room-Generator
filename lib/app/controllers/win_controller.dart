@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/controllers/sound_controller.dart';
 
 class WinController extends GetxController
@@ -8,9 +9,8 @@ class WinController extends GetxController
   RxDouble animationValue = 1.0.obs;
 
   @override
-  void onInit() {
-    super.onInit();
-
+  void onReady() async {
+    super.onReady();
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -21,14 +21,9 @@ class WinController extends GetxController
     });
 
     animationController!.repeat(reverse: true);
-  }
-
-  @override
-  void onReady() async {
     final player = Get.find<SoundController>();
-    await Future.delayed(const Duration(milliseconds: 500));
-    await player.playSound("ending.mp3");
-    super.onReady();
+    await Future.delayed(const Duration(milliseconds: 1));
+    player.playBackgroundSound("${ASSET_SOUNDS}ending.mp3");
   }
 
   @override

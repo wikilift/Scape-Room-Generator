@@ -96,8 +96,8 @@ class LandingController extends GetxController {
           currentIndex.value++;
           totalPoints.value++;
           if (totalPoints.value == maxPoints) {
-            await player.stopBackgroundSound();
-            Get.offAllNamed(Routes.WIN_PAGE);
+            player.stopBackgroundSound();
+            Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
             return;
           }
           Future.microtask(
@@ -118,8 +118,8 @@ class LandingController extends GetxController {
         await player.playSound("coin.mp3");
 
         if (totalPoints.value == maxPoints) {
-          await player.stopBackgroundSound();
-          Get.offAllNamed(Routes.WIN_PAGE);
+          player.stopBackgroundSound();
+          Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
           return;
         }
         Future.microtask(
