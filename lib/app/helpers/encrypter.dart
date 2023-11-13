@@ -10,15 +10,22 @@ class CryptoManager {
   static final iv = IV.fromUtf8('eM1vBb2nICto7Bak');
 
   static Future<List<Challenge>> main() async {
-    const encriptedFilePathO = 'assets/challenge_json/challenge.solve';
+    try {
+      const encriptedFilePathO = 'assets/chh/challenge.solve';
 
-    // Leer, descifrar y escribir en disco
-    Uint8List encryptedContentRead = File(encriptedFilePathO).readAsBytesSync();
-    String decryptedContent = decryptString(encryptedContentRead);
+      Uint8List encryptedContentRead =
+          File(encriptedFilePathO).readAsBytesSync();
+      String decryptedContent = decryptString(encryptedContentRead);
 
-    final map = jsonDecode(decryptedContent);
-
-    return (map['challengues'] as List).map((item) => Challenge.fromMap(item as Map<String, dynamic>)).toList();
+      final map = jsonDecode(decryptedContent);
+      print("DONE");
+      return (map['challengues'] as List)
+          .map((item) => Challenge.fromMap(item as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   static Uint8List encryptString(String plainText) {

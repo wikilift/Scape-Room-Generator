@@ -9,7 +9,7 @@ class ChallengeWidget extends StatelessWidget {
   final LandingController controller;
   @override
   Widget build(BuildContext context) {
-    return Obx(() => (controller.challenges.isEmpty)
+    return Obx(() => (controller.player.challenges.isEmpty)
         ? const SpinKitCircle(
             color: Colors.blue,
             size: 30,
@@ -27,14 +27,25 @@ class ChallengeWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: SelectableText(
-                              controller.challenges[controller.currentIndex.value].text,
+                              controller
+                                  .player
+                                  .challenges[controller.currentIndex.value]
+                                  .text,
                               style: appStandarText(),
                             ),
                           ),
-                          if (controller.challenges[controller.currentIndex.value].imgPath != "NaN")
+                          if (controller
+                                  .player
+                                  .challenges[controller.currentIndex.value]
+                                  .imgPath !=
+                              "NaN")
                             Container(
-                                constraints: const BoxConstraints(maxHeight: 600, maxWidth: 1200),
-                                child: Image.asset(controller.challenges[controller.currentIndex.value].imgPath)),
+                                constraints: const BoxConstraints(
+                                    maxHeight: 600, maxWidth: 1200),
+                                child: Image.asset(controller
+                                    .player
+                                    .challenges[controller.currentIndex.value]
+                                    .imgPath)),
                         ],
                       ),
                     ),

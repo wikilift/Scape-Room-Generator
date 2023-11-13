@@ -42,22 +42,27 @@ class WinPage extends GetView<WinController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(30),
-                    child: Text("Tu regalo está en:\n\n$WHERE_IS_PRESENT",
-                        style: appStandarText(color: Colors.blue, fontSize: 40)),
+                    child: Text(
+                      "Tu regalo está en:\n\n$WHERE_IS_PRESENT",
+                      style: appStandarText(color: Colors.red, fontSize: 40),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   Obx(() => Transform.scale(
                         scale: controller.animationValue.value,
                         child: Padding(
                           padding: const EdgeInsets.all(30),
                           child: Text("¡MUCHAS FELICIDADES $BIRTHDAY_TARGET!",
-                              style: appStandarText(color: Colors.red, fontSize: 40)),
+                              style: appStandarText(
+                                  color: Colors.blue, fontSize: 40)),
                         ),
                       )),
                   MaterialButton(
                     onPressed: () => exit(0),
                     child: Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.orange.withOpacity(0.8)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.orange.withOpacity(0.8)),
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Text(

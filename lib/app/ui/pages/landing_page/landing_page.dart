@@ -20,14 +20,20 @@ class LandingPage extends GetView<LandingController> {
         constraints: const BoxConstraints(minHeight: 1000, minWidth: 600),
         child: Stack(
           children: [
-            SizedBox(
-              width: screenSize.width,
-              height: screenSize.height,
-              child: const Image(
-                image: AssetImage("${ASSET_IMAGES_APP}bk.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
+            Obx(() => SizedBox(
+                  width: screenSize.width,
+                  height: screenSize.height,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(seconds: 1),
+                    child: Image.asset(
+                      IMAGES_BACKGROUND[controller.currentWallPaperIdx.value],
+                      key: ValueKey<int>(controller.currentWallPaperIdx.value),
+                      fit: BoxFit.cover,
+                      width: screenSize.width,
+                      height: screenSize.height,
+                    ),
+                  ),
+                )),
             Obx(() => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(

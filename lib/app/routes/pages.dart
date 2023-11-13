@@ -13,7 +13,7 @@ import 'package:quiz_birthday/app/ui/pages/win_page/win_page.dart';
 part './routes.dart';
 
 abstract class AppPages {
-  static const TRANSITION_DURATION = 800;
+  static const TRANSITION_DURATION = 1800;
   static final pages = [
     //!DEVELOP PAGES
     GetPage(

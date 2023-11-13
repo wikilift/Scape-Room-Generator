@@ -52,7 +52,7 @@ class SplashPage extends GetView<SplashController> {
                   final offsetY = controller.verticalAnimationValue.value;
                   return Transform.translate(
                     offset: Offset(offsetX, offsetY),
-                    child: Image(
+                    child: const Image(
                       image: AssetImage("${ASSET_IMAGES_APP}palo.png"),
                       fit: BoxFit.contain,
                       width: 350,

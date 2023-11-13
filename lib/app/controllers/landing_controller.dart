@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/controllers/sound_controller.dart';
-import 'package:quiz_birthday/app/data/models/challenge.dart';
-import 'package:quiz_birthday/app/helpers/encrypter.dart';
 import 'package:quiz_birthday/app/routes/pages.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
+import 'dart:math';
 
 class LandingController extends GetxController {
   final lifeStates = [].obs;
   final totalLives = 3.0.obs;
   final totalPoints = 0.obs;
-  final challenges = <Challenge>[].obs;
+  // final challenges = <Challenge>[].obs;
   final currentIndex = 0.obs;
+  final currentWallPaperIdx = 0.obs;
   late final int maxPoints;
   final txt = TextEditingController();
   final player = Get.find<SoundController>();
@@ -28,12 +28,23 @@ class LandingController extends GetxController {
     }
   }
 
+  int randomWithExclusion(int min, int max, int exclude) {
+    var rnd = Random();
+    int result;
+
+    do {
+      result = min + rnd.nextInt(max - min);
+    } while (result == exclude);
+
+    return result;
+  }
+
   @override
   void onInit() async {
     super.onInit();
-    challenges.addAll(await CryptoManager.main());
+    player.challenges.addAll(CHALLENGES);
     lifeStates.addAll(List.generate(totalLives.round(), (_) => false));
-    maxPoints = challenges.length;
+    maxPoints = player.challenges.length;
   }
 
   void changeLifeState(int index) {
@@ -62,7 +73,7 @@ class LandingController extends GetxController {
   helPressed() async {
     await Get.defaultDialog(
       title: "Ayuda",
-      middleText: challenges[currentIndex.value].help,
+      middleText: player.challenges[currentIndex.value].help,
       titleStyle: appStandarText(color: Colors.red),
       middleTextStyle: appStandarText(),
       actions: [
@@ -87,7 +98,7 @@ class LandingController extends GetxController {
   }
 
   submitpressed(String input) async {
-    final currentChallengue = challenges[currentIndex.value];
+    final currentChallengue = player.challenges[currentIndex.value];
     if (currentChallengue.contains) {
       bool find = false;
       final solves = currentChallengue.solve.split('*');
@@ -95,6 +106,8 @@ class LandingController extends GetxController {
         if (i.toLowerCase().trim().contains(input.trim().toLowerCase())) {
           currentIndex.value++;
           totalPoints.value++;
+          currentWallPaperIdx.value = randomWithExclusion(
+              0, IMAGES_BACKGROUND.length - 1, currentWallPaperIdx.value);
           if (totalPoints.value == maxPoints) {
             player.stopBackgroundSound();
             Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
@@ -116,7 +129,8 @@ class LandingController extends GetxController {
         currentIndex.value++;
         totalPoints.value++;
         await player.playSound("coin.mp3");
-
+        currentWallPaperIdx.value = randomWithExclusion(
+            0, IMAGES_BACKGROUND.length - 1, currentWallPaperIdx.value);
         if (totalPoints.value == maxPoints) {
           player.stopBackgroundSound();
           Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
