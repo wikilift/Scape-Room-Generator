@@ -99,30 +99,37 @@ class LandingController extends GetxController {
 
   submitpressed(String input) async {
     final currentChallengue = player.challenges[currentIndex.value];
+    String trimmedInput = input.trim().toLowerCase();
     if (currentChallengue.contains) {
       bool find = false;
-      final solves = currentChallengue.solve.split('*');
-      for (final i in solves) {
-        if (i.toLowerCase().trim().contains(input.trim().toLowerCase())) {
-          currentIndex.value++;
-          totalPoints.value++;
-          currentWallPaperIdx.value = randomWithExclusion(
-              0, IMAGES_BACKGROUND.length - 1, currentWallPaperIdx.value);
-          if (totalPoints.value == maxPoints) {
-            player.stopBackgroundSound();
-            Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
-            return;
-          }
-          Future.microtask(
-              () => launchSnackBar("¡Correcto!", "Pin de regalo :)"));
+      final solves =
+          currentChallengue.solve.split('*').map((s) => s.toLowerCase().trim());
 
-          find = true;
-          break;
+      if (trimmedInput.isNotEmpty) {
+        for (final solve in solves) {
+          RegExp exp = RegExp(r'\b' + RegExp.escape(solve) + r'\b');
+          if (exp.hasMatch(trimmedInput)) {
+            find = true;
+            break;
+          }
         }
       }
-      if (!find) {
-        await player.playSound("kick.mp3");
+
+      if (find) {
+        currentIndex.value++;
+        totalPoints.value++;
+        currentWallPaperIdx.value = randomWithExclusion(
+            0, IMAGES_BACKGROUND.length - 1, currentWallPaperIdx.value);
+        if (totalPoints.value == maxPoints) {
+          player.stopBackgroundSound();
+          Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
+        } else {
+          Future.microtask(
+              () => launchSnackBar("¡Correcto!", "Pin de regalo :)"));
+        }
+      } else {
         deleteLife(1);
+        await player.playSound("kick.mp3");
       }
     } else {
       if (input.toLowerCase().trim() == currentChallengue.solve.toLowerCase()) {
