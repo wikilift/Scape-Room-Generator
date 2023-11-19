@@ -1,13 +1,20 @@
 import 'package:get/get.dart';
+import 'package:quiz_birthday/app/constants/app_constants.dart';
 
 import 'package:quiz_birthday/app/controllers/sound_controller.dart';
 
 class GameoverController extends GetxController {
+  final player = Get.find<SoundController>();
+
   @override
   void onReady() async {
-    final player = Get.find<SoundController>();
-    await Future.delayed(const Duration(milliseconds: 500));
-    await player.playSound("die.mp3");
-    super.onReady();
+    await player.stopBackgroundSound();
+    Future.delayed(const Duration(milliseconds: 500));
+    try {
+      player.playSound(CONFIG_APP.gameOverMusic);
+      super.onReady();
+    } catch (e) {
+      print(e);
+    }
   }
 }

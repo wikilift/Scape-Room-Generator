@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/controllers/sound_controller.dart';
+import 'package:quiz_birthday/app/data/models/challenge.dart';
 import 'package:quiz_birthday/app/routes/pages.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 import 'dart:math';
@@ -12,7 +13,7 @@ class LandingController extends GetxController {
   final lifeStates = [].obs;
   final totalLives = 3.0.obs;
   final totalPoints = 0.obs;
-  // final challenges = <Challenge>[].obs;
+  final challenges = <Challenge>[].obs;
   final currentIndex = 0.obs;
   final currentWallPaperIdx = 0.obs;
   late final int maxPoints;
@@ -42,9 +43,9 @@ class LandingController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    player.challenges.addAll(CHALLENGES);
+    challenges.addAll(CONFIG_APP.challengeList);
     lifeStates.addAll(List.generate(totalLives.round(), (_) => false));
-    maxPoints = player.challenges.length;
+    maxPoints = challenges.length;
   }
 
   void changeLifeState(int index) {
@@ -62,7 +63,6 @@ class LandingController extends GetxController {
         lifeStates[i] = i >= fullLives;
       }
     } else {
-      await player.stopBackgroundSound();
       Get.offAllNamed(Routes.GAME_OVER);
       /*   await player
           .playSound("die.mp3")
@@ -73,7 +73,7 @@ class LandingController extends GetxController {
   helPressed() async {
     await Get.defaultDialog(
       title: "Ayuda",
-      middleText: player.challenges[currentIndex.value].help,
+      middleText: challenges[currentIndex.value].help,
       titleStyle: appStandarText(color: Colors.red),
       middleTextStyle: appStandarText(),
       actions: [
@@ -94,11 +94,11 @@ class LandingController extends GetxController {
       ],
     );
     deleteLife(0.5);
-    await player.playSound("kick.mp3");
+    await player.playSound(CONFIG_APP.failMusic);
   }
 
   submitpressed(String input) async {
-    final currentChallengue = player.challenges[currentIndex.value];
+    final currentChallengue = challenges[currentIndex.value];
     String trimmedInput = input.trim().toLowerCase();
     if (currentChallengue.contains) {
       bool find = false;
@@ -118,8 +118,9 @@ class LandingController extends GetxController {
       if (find) {
         currentIndex.value++;
         totalPoints.value++;
+        await player.playSound(CONFIG_APP.assertMusic);
         currentWallPaperIdx.value = randomWithExclusion(
-            0, IMAGES_BACKGROUND.length - 1, currentWallPaperIdx.value);
+            0, CONFIG_APP.wallpaperList.length - 1, currentWallPaperIdx.value);
         if (totalPoints.value == maxPoints) {
           player.stopBackgroundSound();
           Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
@@ -129,15 +130,15 @@ class LandingController extends GetxController {
         }
       } else {
         deleteLife(1);
-        await player.playSound("kick.mp3");
+        await player.playSound(CONFIG_APP.failMusic);
       }
     } else {
       if (input.toLowerCase().trim() == currentChallengue.solve.toLowerCase()) {
         currentIndex.value++;
         totalPoints.value++;
-        await player.playSound("coin.mp3");
+        await player.playSound(CONFIG_APP.assertMusic);
         currentWallPaperIdx.value = randomWithExclusion(
-            0, IMAGES_BACKGROUND.length - 1, currentWallPaperIdx.value);
+            0, CONFIG_APP.wallpaperList.length - 1, currentWallPaperIdx.value);
         if (totalPoints.value == maxPoints) {
           player.stopBackgroundSound();
           Future.microtask(() => Get.offAllNamed(Routes.WIN_PAGE));
@@ -147,7 +148,7 @@ class LandingController extends GetxController {
             () => launchSnackBar("¡Correcto!", "Pin de regalo :)"));
       } else {
         deleteLife(1);
-        await player.playSound("kick.mp3");
+        await player.playSound(CONFIG_APP.failMusic);
       }
     }
     txt.clear();

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
@@ -35,7 +34,7 @@ class WinPage extends GetView<WinController> {
                   Padding(
                     padding: const EdgeInsets.all(30),
                     child: Text(
-                      "Has superado los límites de lo imaginable, conquistando desafíos donde otros vieron imposibles. En este reino de héroes, te alzas triunfante. Ahora, el momento ha llegado: reclama tu glorioso premio, merecido por tu valentía y esfuerzo.",
+                      CONFIG_APP.winMessage,
                       style: appStandarText(color: Colors.white, fontSize: 30),
                       textAlign: TextAlign.center,
                     ),
@@ -43,7 +42,7 @@ class WinPage extends GetView<WinController> {
                   Padding(
                     padding: const EdgeInsets.all(30),
                     child: Text(
-                      "Tu regalo está en:\n\n$WHERE_IS_PRESENT",
+                      CONFIG_APP.whereIsPresent,
                       style: appStandarText(color: Colors.red, fontSize: 40),
                       textAlign: TextAlign.center,
                     ),
@@ -52,7 +51,8 @@ class WinPage extends GetView<WinController> {
                         scale: controller.animationValue.value,
                         child: Padding(
                           padding: const EdgeInsets.all(30),
-                          child: Text("¡MUCHAS FELICIDADES $BIRTHDAY_TARGET!",
+                          child: Text(
+                              "¡MUCHAS FELICIDADES ${CONFIG_APP.birthdayTarget}!",
                               style: appStandarText(
                                   color: Colors.blue, fontSize: 40)),
                         ),

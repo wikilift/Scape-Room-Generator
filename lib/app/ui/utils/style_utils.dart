@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
+import 'package:quiz_birthday/app/constants/app_constants.dart';
 
 const double SIZED_FLOW_STATE = 450;
 const double SIZED_STATE_1 = 4;
@@ -133,7 +134,7 @@ TextStyle appStandarText(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         height: 1.5,
-        fontFamily: 'myFont',
+        fontFamily: CONFIG_APP.font,
         decoration: TextDecoration.none,
         shadows: (shadow)
             ? const [

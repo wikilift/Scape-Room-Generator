@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/release
 assets/challenge_json/challenge.json
 assets/challenge_json/solve.in
+assets/img_app/cris/lifecm.png
+assets/img_app/cris/failcm.png
+assets/img_app/cris/jessicaCrospsd.png

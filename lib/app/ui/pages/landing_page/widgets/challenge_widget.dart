@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/controllers/landing_controller.dart';
+import 'package:quiz_birthday/app/ui/pages/landing_page/widgets/pdf_viewer.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 
 class ChallengeWidget extends StatelessWidget {
@@ -9,13 +10,13 @@ class ChallengeWidget extends StatelessWidget {
   final LandingController controller;
   @override
   Widget build(BuildContext context) {
-    return Obx(() => (controller.player.challenges.isEmpty)
+    return Obx(() => (controller.challenges.isEmpty)
         ? const SpinKitCircle(
             color: Colors.blue,
             size: 30,
           )
         : Container(
-            constraints: const BoxConstraints(maxHeight: 600, maxWidth: 1200),
+            constraints: const BoxConstraints(maxHeight: 700, maxWidth: 1200),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -28,14 +29,12 @@ class ChallengeWidget extends StatelessWidget {
                             padding: const EdgeInsets.all(20.0),
                             child: SelectableText(
                               controller
-                                  .player
                                   .challenges[controller.currentIndex.value]
                                   .text,
                               style: appStandarText(),
                             ),
                           ),
                           if (controller
-                                  .player
                                   .challenges[controller.currentIndex.value]
                                   .imgPath !=
                               "NaN")
@@ -43,9 +42,15 @@ class ChallengeWidget extends StatelessWidget {
                                 constraints: const BoxConstraints(
                                     maxHeight: 600, maxWidth: 1200),
                                 child: Image.asset(controller
-                                    .player
                                     .challenges[controller.currentIndex.value]
                                     .imgPath)),
+                          if (controller
+                              .challenges[controller.currentIndex.value].pdf)
+                            PdfViewer(
+                              pdfPath: controller
+                                  .challenges[controller.currentIndex.value]
+                                  .pdfPath,
+                            )
                         ],
                       ),
                     ),

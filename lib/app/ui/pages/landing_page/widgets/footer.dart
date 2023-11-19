@@ -19,9 +19,13 @@ class Footer extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: controller.txt,
+              //onSubmitted: controller.submitpressed(controller.txt.text),
               style: appStandarText(color: Colors.blue),
               decoration: inputFieldDecoration(
-                  label: "Answer", hint: "Insert your solve", icon: Icons.question_answer, colorBorder: Colors.red),
+                  label: "Answer",
+                  hint: "Insert your solve",
+                  icon: Icons.question_answer,
+                  colorBorder: Colors.red),
             ),
           ),
           IconButton(

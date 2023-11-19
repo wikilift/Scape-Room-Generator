@@ -19,8 +19,8 @@ class SplashPage extends GetView<SplashController> {
           SizedBox(
             width: screenSize.width,
             height: screenSize.height,
-            child: const Image(
-              image: AssetImage("${ASSET_IMAGES_APP}opening.png"),
+            child: Image(
+              image: AssetImage(CONFIG_APP.splashWallpaper),
               fit: BoxFit.cover,
             ),
           ),
@@ -52,8 +52,8 @@ class SplashPage extends GetView<SplashController> {
                   final offsetY = controller.verticalAnimationValue.value;
                   return Transform.translate(
                     offset: Offset(offsetX, offsetY),
-                    child: const Image(
-                      image: AssetImage("${ASSET_IMAGES_APP}palo.png"),
+                    child: Image(
+                      image: AssetImage(CONFIG_APP.loadingScreen),
                       fit: BoxFit.contain,
                       width: 350,
                       height: 300,

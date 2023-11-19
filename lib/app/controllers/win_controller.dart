@@ -23,7 +23,7 @@ class WinController extends GetxController
     animationController!.repeat(reverse: true);
     final player = Get.find<SoundController>();
     await Future.delayed(const Duration(milliseconds: 1));
-    player.playBackgroundSound("${ASSET_SOUNDS}ending.mp3");
+    player.playBackgroundSound(CONFIG_APP.winMusic);
   }
 
   @override

@@ -26,7 +26,8 @@ class LandingPage extends GetView<LandingController> {
                   child: AnimatedSwitcher(
                     duration: const Duration(seconds: 1),
                     child: Image.asset(
-                      IMAGES_BACKGROUND[controller.currentWallPaperIdx.value],
+                      CONFIG_APP
+                          .wallpaperList[controller.currentWallPaperIdx.value],
                       key: ValueKey<int>(controller.currentWallPaperIdx.value),
                       fit: BoxFit.cover,
                       width: screenSize.width,
@@ -87,10 +88,8 @@ class LandingPage extends GetView<LandingController> {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: LifeIndicatorWidget(
-                                        emptyLifeImagePath:
-                                            "${ASSET_IMAGES_APP}fail.png",
-                                        imagePath:
-                                            "${ASSET_IMAGES_APP}life.png",
+                                        emptyLifeImagePath: CONFIG_APP.imgFail,
+                                        imagePath: CONFIG_APP.imgLife,
                                         index: index,
                                         controller: controller,
                                       ),
