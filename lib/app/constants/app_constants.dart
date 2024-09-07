@@ -10,28 +10,29 @@ const String ASSET_SOUNDS = "sounds/";
 const String ASSET_IMAGES_CHALLENGE = "assets/img_challenge/";
 const String ASSET_DATA = "assets/data/";
 
-enum BirthdayConfig { CRIS, INIGO }
+enum BirthdayConfig { CRIS, INIGO, VIKI, DEBUG }
 
 final CONFIG_APP = Config(
-    imgFail: "${ASSET_IMAGES_APP}cris/failcm.png",
-    imgLife: "${ASSET_IMAGES_APP}cris/lifecm.png",
-    loadingScreen: "${ASSET_IMAGES_APP}cris/jessicaCrospsd.png",
+    imgFail: "${ASSET_IMAGES_APP}viki/viki_lose.png",
+    imgLife: "${ASSET_IMAGES_APP}viki/vikiok.png",
+    loadingScreen: "${ASSET_IMAGES_APP}viki/jessicaCrospsd.png",
     font: "mistery",
-    splashWallpaper: "${ASSET_IMAGES_APP}cris/open_mistery.png",
-    birthdayTarget: "Cristina",
-    whereIsPresent: "En progreso",
-    loopMusic: "${ASSET_SOUNDS}mistery.mp3",
+    splashWallpaper: "${ASSET_IMAGES_APP}viki/wall.png",
+    birthdayTarget: "Vikki",
+    whereIsPresent: "Vale por una noche en Andorra",
+    loopMusic: "${ASSET_SOUNDS}harry.mp3",
     assertMusic: "good_mistery.mp3",
-    failMusic: "fail.wav",
+    failMusic: "fail_potter.wav",
     gameOverMusic: "game_over.wav",
     winMusic: "${ASSET_SOUNDS}win_mistery.mp3",
+    winWallpaper: "${ASSET_IMAGES_APP}viki/win_potter.jpg",
     wallpaperList: const [
-      "assets/img_app/cris/bk1.png",
-      "assets/img_app/cris/bk2.png",
-      "assets/img_app/cris/bk3.png",
-      "assets/img_app/cris/bk4.png",
-      "assets/img_app/cris/bk5.png",
-      "assets/img_app/cris/bk6.png",
-      "assets/img_app/cris/bk7.png"
+      "assets/img_app/viki/bk1.png",
+      "assets/img_app/viki/bk2.png",
+      "assets/img_app/viki/bk3.png",
+      "assets/img_app/viki/bk4.png",
+      "assets/img_app/viki/bk5.png",
+      "assets/img_app/viki/bk6.png",
+      "assets/img_app/viki/bk7.png"
     ],
-    challengeList: GET_CHALLENGUES_CONFIG(BirthdayConfig.CRIS));
+    challengeList: GET_CHALLENGUES_CONFIG(BirthdayConfig.VIKI));

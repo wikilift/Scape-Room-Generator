@@ -15,26 +15,36 @@ class Footer extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxWidth: 1200),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: TextField(
               controller: controller.txt,
-              //onSubmitted: controller.submitpressed(controller.txt.text),
+              onSubmitted: (_) => controller.submitpressed(controller.txt.text),
               style: appStandarText(color: Colors.blue),
               decoration: inputFieldDecoration(
-                  label: "Answer",
-                  hint: "Insert your solve",
+                  label: "Respuesta",
+                  hint: "Introduce tu solución",
                   icon: Icons.question_answer,
                   colorBorder: Colors.red),
             ),
           ),
-          IconButton(
-              onPressed: () => controller.helPressed(),
-              icon: const Icon(
-                Icons.help,
-                color: Colors.red,
-                size: 40,
-              ))
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () => controller.helPressed(),
+              child: const CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 40,
+                child: Icon(
+                  Icons.help,
+                  color: Colors.white,
+                  size: 80,
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

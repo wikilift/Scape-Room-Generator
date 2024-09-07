@@ -16,115 +16,117 @@ class LandingPage extends GetView<LandingController> {
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Container(
-        constraints: const BoxConstraints(minHeight: 1000, minWidth: 600),
-        child: Stack(
-          children: [
-            Obx(() => SizedBox(
-                  width: screenSize.width,
-                  height: screenSize.height,
-                  child: AnimatedSwitcher(
-                    duration: const Duration(seconds: 1),
-                    child: Image.asset(
-                      CONFIG_APP
-                          .wallpaperList[controller.currentWallPaperIdx.value],
-                      key: ValueKey<int>(controller.currentWallPaperIdx.value),
-                      fit: BoxFit.cover,
-                      width: screenSize.width,
-                      height: screenSize.height,
+      body: SingleChildScrollView(
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 1000, minWidth: 600),
+          child: Stack(
+            children: [
+              Obx(() => SizedBox(
+                    width: screenSize.width,
+                    height: screenSize.height,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(seconds: 1),
+                      child: Image.asset(
+                        CONFIG_APP.wallpaperList[
+                            controller.currentWallPaperIdx.value],
+                        key:
+                            ValueKey<int>(controller.currentWallPaperIdx.value),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
                     ),
-                  ),
-                )),
-            Obx(() => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Obx(() => Text(
-                                  "Points: ${controller.totalPoints}",
-                                  style: appStandarText(
-                                      color: Colors.blue, fontSize: 50),
-                                )),
-                            Obx(() => Column(
-                                  children: [
-                                    Text("Volume",
-                                        style: appStandarText(
-                                            color: Colors.orange)),
-                                    Slider(
-                                        value: controller.volume.value,
-                                        min: 0.0,
-                                        max: 1.0,
-                                        //divisions: 10,
-                                        onChanged: (double value) {
-                                          try {
-                                            controller.volume.value = value;
-                                            controller.player.backgroundPlayer
-                                                ?.setVolume(
-                                                    controller.volume.value);
-                                          } catch (e) {
-                                            print(e);
-                                          }
-                                        }),
-                                  ],
-                                )),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Lifes:',
+                  )),
+              Obx(() => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Obx(() => Text(
+                                    "Points: ${controller.totalPoints}",
                                     style: appStandarText(
-                                        fontSize: 50, color: Colors.red),
+                                        color: Colors.blue, fontSize: 50),
+                                  )),
+                              Obx(() => Column(
+                                    children: [
+                                      Text("Volume",
+                                          style: appStandarText(
+                                              color: Colors.orange)),
+                                      Slider(
+                                          value: controller.volume.value,
+                                          min: 0.0,
+                                          max: 1.0,
+                                          //divisions: 10,
+                                          onChanged: (double value) {
+                                            try {
+                                              controller.volume.value = value;
+                                              controller.player.backgroundPlayer
+                                                  ?.setVolume(
+                                                      controller.volume.value);
+                                            } catch (e) {
+                                              print(e);
+                                            }
+                                          }),
+                                    ],
+                                  )),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Lifes:',
+                                      style: appStandarText(
+                                          fontSize: 50, color: Colors.red),
+                                    ),
                                   ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: List.generate(
-                                      controller.lifeStates.length, (index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: LifeIndicatorWidget(
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: List.generate(
+                                        controller.lifeStates.length, (index) {
+                                      return LifeIndicatorWidget(
                                         emptyLifeImagePath: CONFIG_APP.imgFail,
                                         imagePath: CONFIG_APP.imgLife,
                                         index: index,
                                         controller: controller,
-                                      ),
-                                    );
-                                  }),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 60),
-                      ChallengeWidget(controller: controller),
-                      Footer(controller: controller),
-                      const SizedBox(height: 14),
-                      MaterialButton(
-                        onPressed: () =>
-                            controller.submitpressed(controller.txt.text),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.red),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              'Submit',
-                              style: appStandarText(color: Colors.white),
-                            ),
+                                      );
+                                    }),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                ))
-          ],
+                        const SizedBox(height: 5),
+                        ChallengeWidget(controller: controller),
+                        const SizedBox(height: 20),
+                        Footer(controller: controller),
+                        MaterialButton(
+                          elevation: 18,
+                          onPressed: () =>
+                              controller.submitpressed(controller.txt.text),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.green.withOpacity(0.95)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                '¡Al lío!',
+                                style: appStandarText(
+                                    color: Colors.white, fontSize: H2),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
       floatingActionButton: const ExitButton(),

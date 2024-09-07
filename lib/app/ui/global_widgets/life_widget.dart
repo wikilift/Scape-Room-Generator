@@ -20,7 +20,8 @@ class LifeIndicatorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       bool isFullLife = index < controller.totalLives.floor();
-      bool isHalfLife = index == controller.totalLives.floor() && controller.totalLives.value % 1 != 0;
+      bool isHalfLife = index == controller.totalLives.floor() &&
+          controller.totalLives.value % 1 != 0;
 
       String displayedImagePath;
       double widthFactor;
@@ -37,14 +38,16 @@ class LifeIndicatorWidget extends StatelessWidget {
       }
 
       return ClipOval(
-        // Usando ClipOval para mantener la forma circular
         child: Align(
           alignment: Alignment.centerLeft,
           widthFactor: widthFactor,
           child: CircleAvatar(
-            backgroundColor: Colors.blue.withOpacity(0.5),
-            radius: 38,
-            backgroundImage: AssetImage(displayedImagePath),
+            backgroundColor: Colors.transparent,
+            radius: 60,
+            child: Image(
+              image: AssetImage(displayedImagePath),
+              fit: BoxFit.cover, height: 140, // Add foregroundImage
+            ),
           ),
         ),
       );

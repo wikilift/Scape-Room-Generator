@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiz_birthday/app/constants/app_constants.dart';
 import 'package:quiz_birthday/app/controllers/gameover_controller.dart';
+import 'package:quiz_birthday/app/controllers/sound_controller.dart';
+import 'package:quiz_birthday/app/routes/pages.dart';
 import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 
 class GameoverPage extends GetView<GameoverController> {
@@ -25,6 +27,40 @@ class GameoverPage extends GetView<GameoverController> {
             fit: BoxFit.cover,
           ),
         ),
+        Positioned(
+          top: 150,
+          left: 0,
+          right: 0,
+          child: MaterialButton(
+            onPressed: () async {
+              await Get.find<SoundController>()
+                  .playBackgroundSound(CONFIG_APP.loopMusic);
+              Get.toNamed(Routes.SPLASH_PAGE);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.green.withOpacity(0.8)),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  '¡Otra vez!',
+                  style: appStandarText(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 100,
+          left: 0,
+          right: 0,
+          child: Text(
+            "Tu patética puntuación es de: ${controller.points} puntos",
+            style: appStandarText(fontSize: H2, color: Colors.red),
+            textAlign: TextAlign.center,
+          ),
+        ),
         SizedBox(
           child: Align(
             alignment: Alignment.center,
@@ -41,6 +77,8 @@ class GameoverPage extends GetView<GameoverController> {
                         textAlign: TextAlign.center,
                         style: appStandarText(color: Colors.red, fontSize: 20)),
                   ),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   MaterialButton(
                     onPressed: () => exit(0),
                     child: Container(

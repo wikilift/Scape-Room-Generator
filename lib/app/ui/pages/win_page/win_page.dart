@@ -17,8 +17,8 @@ class WinPage extends GetView<WinController> {
         SizedBox(
           width: screenSize.width,
           height: screenSize.height,
-          child: const Image(
-            image: AssetImage("${ASSET_IMAGES_APP}win.jpg"),
+          child: Image(
+            image: AssetImage(CONFIG_APP.winWallpaper),
             fit: BoxFit.cover,
           ),
         ),

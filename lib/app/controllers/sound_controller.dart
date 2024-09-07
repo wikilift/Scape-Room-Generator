@@ -21,6 +21,7 @@ class SoundController extends GetxService {
       try {
         await player.play(AssetSource("sounds/$asset"));
         await player.setReleaseMode(ReleaseMode.stop);
+        await player.setVolume(1.0);
         player.onPlayerComplete.listen((event) {
           player.dispose();
         });

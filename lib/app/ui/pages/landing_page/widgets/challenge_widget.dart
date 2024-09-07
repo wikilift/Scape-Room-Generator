@@ -8,6 +8,7 @@ import 'package:quiz_birthday/app/ui/utils/style_utils.dart';
 class ChallengeWidget extends StatelessWidget {
   const ChallengeWidget({super.key, required this.controller});
   final LandingController controller;
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => (controller.challenges.isEmpty)
@@ -16,7 +17,9 @@ class ChallengeWidget extends StatelessWidget {
             size: 30,
           )
         : Container(
-            constraints: const BoxConstraints(maxHeight: 700, maxWidth: 1200),
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.65,
+                maxWidth: MediaQuery.of(context).size.width * 0.9),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -27,12 +30,12 @@ class ChallengeWidget extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: SelectableText(
-                              controller
-                                  .challenges[controller.currentIndex.value]
-                                  .text,
-                              style: appStandarText(),
-                            ),
+                            child: Obx(() {
+                              return SelectableText(
+                                controller.displayedText.value,
+                                style: appStandarText(),
+                              );
+                            }),
                           ),
                           if (controller
                                   .challenges[controller.currentIndex.value]

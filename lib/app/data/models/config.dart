@@ -15,6 +15,7 @@ class Config {
       failMusic,
       gameOverMusic,
       winMusic,
+      winWallpaper,
       assertMusic;
   final List<String> wallpaperList;
   final List<Challenge> challengeList;
@@ -42,6 +43,7 @@ class Config {
       this.gameOverMusic = "die.mp3",
       this.winMusic = "${ASSET_SOUNDS}ending.mp3",
       this.assertMusic = "coin.mp3",
+      this.winWallpaper = "assets/img_app/win.jpg",
       this.winMessage =
           "Has superado los límites de lo imaginable, conquistando desafíos donde otros vieron imposibles. En este reino de héroes, te alzas triunfante. Ahora, el momento ha llegado: reclama tu glorioso premio, merecido por tu valentía y esfuerzo."});
 }

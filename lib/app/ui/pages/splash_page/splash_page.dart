@@ -55,8 +55,8 @@ class SplashPage extends GetView<SplashController> {
                     child: Image(
                       image: AssetImage(CONFIG_APP.loadingScreen),
                       fit: BoxFit.contain,
-                      width: 350,
-                      height: 300,
+                      width: 450,
+                      height: 520,
                     ),
                   );
                 }),
